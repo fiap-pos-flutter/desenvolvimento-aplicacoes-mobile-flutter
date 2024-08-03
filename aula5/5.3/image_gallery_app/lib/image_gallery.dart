@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_gallery_app/routes.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -13,6 +15,8 @@ class _ImageGalleryState extends State<ImageGallery> {
   final List<File> images = [];
   final List<String> imageUrls = [];
   final ImagePicker _picker = ImagePicker();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? _user;
 
   AccelerometerEvent? _accelerometerEvent;
 
@@ -53,7 +57,12 @@ class _ImageGalleryState extends State<ImageGallery> {
   @override
   void initState() {
     super.initState();
-    _listImages();
+    _user = _auth.currentUser;
+    if (_user == null) {
+      Navigator.pushReplacementNamed(context, Routes.login);
+    } else {
+      _listImages();
+    }
 
     accelerometerEvents.listen((AccelerometerEvent event) {
       setState(() {
