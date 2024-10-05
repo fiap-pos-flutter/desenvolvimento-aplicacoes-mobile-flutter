@@ -3,14 +3,24 @@ import 'package:flutter/material.dart';
 class ImageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final String imagePath = ModalRoute.of(context)!.settings.arguments as String;
+    final String imagePath =
+        ModalRoute.of(context)?.settings.arguments as String;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('View Image'),
+        title: Text('View image'),
       ),
-      body: Center(
-        child: Image.asset(imagePath),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(imagePath),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Voltar para a tela anterior'),
+          ),
+        ],
       ),
     );
   }
