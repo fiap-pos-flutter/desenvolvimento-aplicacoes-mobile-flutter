@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => ImageGallery(),
-        '/view': (context) => ImageView(),
+        '/image-view': (context) => ImageView(),
       },
     );
   }
@@ -47,7 +47,7 @@ class ImageGallery extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(
                 context,
-                '/view',
+                '/image-view',
                 arguments: images[index],
               );
             },
