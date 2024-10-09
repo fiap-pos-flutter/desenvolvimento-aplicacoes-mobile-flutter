@@ -17,9 +17,7 @@ class _ImageGalleryState extends State<ImageGallery> {
     try {
       String fileName = file.path.split('/').last;
 
-      await FirebaseStorage.instance
-          .ref('uploads/$fileName')
-          .putFile(file);
+      await FirebaseStorage.instance.ref('uploads/$fileName').putFile(file);
     } catch (e) {
       print('Upload failed: $e');
     }
@@ -36,6 +34,12 @@ class _ImageGalleryState extends State<ImageGallery> {
     }
   }
 
+  // void _addImage() {
+  //   setState(() {
+  //     images.add('assets/images/image4.jpg'); // Adiciona uma nova imagem
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,16 +52,12 @@ class _ImageGalleryState extends State<ImageGallery> {
           ),
         ],
       ),
-      body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _CustomImages(images: images),
+          ],
         ),
-        itemCount: images.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: Image.file(images[index]),
-          );
-        },
       ),
     );
   }

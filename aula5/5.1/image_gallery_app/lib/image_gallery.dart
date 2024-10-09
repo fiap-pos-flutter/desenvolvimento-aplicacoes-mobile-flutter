@@ -1,8 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+
+import 'routes.dart';
+
+part './custom_images.dart';
 
 class ImageGallery extends StatefulWidget {
   @override
@@ -10,56 +16,82 @@ class ImageGallery extends StatefulWidget {
 }
 
 class _ImageGalleryState extends State<ImageGallery> {
-  final List<File> images = [];
-  final List<String> imageUrls = [];
+  final List<String> _imagesUrls = [];
+  bool _loading = false;
   final ImagePicker _picker = ImagePicker();
-
   AccelerometerEvent? _accelerometerEvent;
-
-  Future<void> _listImages() async {
-    final ListResult result =
-        await FirebaseStorage.instance.ref('uploads').listAll();
-    final List<String> urls =
-        await Future.wait(result.items.map((Reference ref) async {
-      return await ref.getDownloadURL();
-    }).toList());
-    setState(() {
-      imageUrls.addAll(urls);
-    });
-  }
-
-  Future<void> _uploadImage(String filePath) async {
-    File file = File(filePath);
-    try {
-      String fileName = file.path.split('/').last;
-
-      await FirebaseStorage.instance.ref('uploads/$fileName').putFile(file);
-    } catch (e) {
-      print('Upload failed: $e');
-    }
-  }
-
-  Future<void> _pickImage() async {
-    final XFile? pickedFile =
-        await _picker.pickImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      setState(() {
-        images.add(File(pickedFile.path));
-      });
-      _uploadImage(pickedFile.path);
-    }
-  }
 
   @override
   void initState() {
-    super.initState();
-    _listImages();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
 
-    accelerometerEvents.listen((AccelerometerEvent event) {
+    accelerometerEvents.listen((event) {
       setState(() {
         _accelerometerEvent = event;
       });
     });
+
+    _listImages();
+
+    super.initState();
+  }
+
+  void _listImages() async {
+    setState(() {
+      _loading = true;
+    });
+
+    final ListResult result =
+        await FirebaseStorage.instance.ref('uploads').list();
+
+    final List<String> urls = await Future.wait(
+      result.items.map((element) async {
+        return await element.getDownloadURL();
+      }),
+    );
+
+    setState(() {
+      _loading = false;
+      _imagesUrls.addAll(urls);
+    });
+  }
+
+  void _pickImage() async {
+    try {
+      final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+      if (pickedFile != null) {
+        var file = File(pickedFile.path);
+
+        _uploadImage(file);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _uploadImage(File file) async {
+    try {
+      setState(() {
+        _loading = true;
+      });
+
+      String fileName = file.path.split('/').last;
+
+      var storageRef = FirebaseStorage.instance.ref('uploads/$fileName');
+      await storageRef.putFile(file);
+
+      var url = await storageRef.getDownloadURL();
+
+      setState(() {
+        _loading = false;
+        _imagesUrls.add(url);
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -69,55 +101,27 @@ class _ImageGalleryState extends State<ImageGallery> {
         title: Text('Image Gallery'),
         actions: [
           IconButton(
-            icon: Icon(Icons.camera),
+            icon: Icon(Icons.add),
             onPressed: _pickImage,
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Text(
-            'Accelerometer: \n'
-            'X: ${_accelerometerEvent?.x.toStringAsFixed(2) ?? "0.00"}, \n'
-            'Y: ${_accelerometerEvent?.y.toStringAsFixed(2) ?? "0.00"}, \n'
-            'Z: ${_accelerometerEvent?.z.toStringAsFixed(2) ?? "0.00"}',
-            style: TextStyle(fontSize: 18),
-          ),
-          Text(
-            'Imagens remotas: \n',
-            style: TextStyle(fontSize: 18),
-          ),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemCount: imageUrls.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: Image.network(imageUrls[index]),
-                );
-              },
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Center(
+              child: Text('Acelerometro: \n'
+                  'X: ${_accelerometerEvent?.x.toStringAsFixed(2) ?? '0.00'} \n'
+                  'Y: ${_accelerometerEvent?.y.toStringAsFixed(2) ?? '0.00'} \n'
+                  'Z: ${_accelerometerEvent?.z.toStringAsFixed(2) ?? '0.00'} \n'),
             ),
-          ),
-          Text(
-            'Imagens locais: \n',
-            style: TextStyle(fontSize: 18),
-          ),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemCount: images.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: Image.file(images[index]),
-                );
-              },
-            ),
-          ),
-        ],
+            if (_loading)
+              const CircularProgressIndicator()
+            else
+              _CustomImages(images: _imagesUrls),
+          ],
+        ),
       ),
     );
   }

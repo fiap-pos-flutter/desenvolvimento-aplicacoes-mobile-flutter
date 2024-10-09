@@ -1,5 +1,6 @@
 class Routes {
-  static const String login = '/';
   static const String register = '/register';
-  static const String gallery = '/gallery';
+  static const String imageView = '/image-view';
+  static const String login = '/login';
+  static const String imageGallery = '/image-gallery';
 }

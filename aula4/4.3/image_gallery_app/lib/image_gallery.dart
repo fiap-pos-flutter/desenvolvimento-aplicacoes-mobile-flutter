@@ -58,29 +58,21 @@ class _ImageGalleryState extends State<ImageGallery> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Text(
-            'Accelerometer: \n'
-            'X: ${_accelerometerEvent?.x.toStringAsFixed(2) ?? "0.00"}, \n'
-            'Y: ${_accelerometerEvent?.y.toStringAsFixed(2) ?? "0.00"}, \n'
-            'Z: ${_accelerometerEvent?.z.toStringAsFixed(2) ?? "0.00"}',
-            style: TextStyle(fontSize: 18),
-          ),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemCount: images.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: Image.file(images[index]),
-                );
-              },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              'Accelerometer: \n'
+              'X: ${_accelerometerEvent?.x.toStringAsFixed(2) ?? "0.00"}, \n'
+              'Y: ${_accelerometerEvent?.y.toStringAsFixed(2) ?? "0.00"}, \n'
+              'Z: ${_accelerometerEvent?.z.toStringAsFixed(2) ?? "0.00"}',
+              style: TextStyle(fontSize: 18),
             ),
-          ),
-        ],
+            Expanded(
+              child: _CustomImages(images: images),
+            ),
+          ],
+        ),
       ),
     );
   }
