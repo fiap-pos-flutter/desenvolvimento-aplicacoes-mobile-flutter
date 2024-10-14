@@ -1,17 +1,20 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'login_screen.dart';
-import 'register_screen.dart';
-import 'image_gallery.dart';
+import 'package:flutter/material.dart';
+import 'package:image_gallery_app/screens/login_screen.dart';
+import 'package:image_gallery_app/screens/register_screen.dart';
+import 'screens/image_gallery_screen.dart';
 import 'routes.dart';
+import 'screens/image_view_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,9 +24,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: Routes.login,
       routes: {
-        Routes.login: (context) => LoginScreen(),
-        Routes.register: (context) => RegisterScreen(),
-        Routes.gallery: (context) => ImageGallery(),
+        Routes.register: (context) => const RegisterScreen(),
+        Routes.imageView: (context) => const ImageViewScreen(),
+        Routes.login: (context) => const LoginScreen(),
+        Routes.imageGallery: (context) => const ImageGalleryScreen(),
       },
     );
   }
