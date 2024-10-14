@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../app_colors.dart';
+
 class ImageViewScreen extends StatelessWidget {
   const ImageViewScreen({super.key});
 
@@ -12,28 +14,28 @@ class ImageViewScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF7F3FC), // Light purple background
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: Colors.white, //change your color here
+          color: AppColors.background, //change your color here
         ),
         title: const Text(
           'View Image',
           style: TextStyle(
             fontSize: 22.0,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppColors.background,
           ),
         ),
-        backgroundColor: Colors.purple,
+        backgroundColor: AppColors.primary,
       ),
       body: Center(
         child: Container(
           margin: const EdgeInsets.all(16.0),
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.background,
             borderRadius: BorderRadius.circular(12.0),
             boxShadow: const [
               BoxShadow(
-                color: Colors.black12,
+                color: AppColors.shadow,
                 blurRadius: 10.0,
                 spreadRadius: 2.0,
               ),
@@ -52,7 +54,7 @@ class ImageViewScreen extends StatelessWidget {
                         ? loadingProgress.cumulativeBytesLoaded /
                             (loadingProgress.expectedTotalBytes ?? 1)
                         : null,
-                    color: Colors.purple,
+                    color: AppColors.primary,
                   ),
                 );
               }
@@ -61,7 +63,7 @@ class ImageViewScreen extends StatelessWidget {
               return const Center(
                 child: Text(
                   'Failed to load image',
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(color: AppColors.error),
                 ),
               );
             },

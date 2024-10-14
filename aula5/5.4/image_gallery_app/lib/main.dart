@@ -19,9 +19,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Image Gallery App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       initialRoute: Routes.login,
       routes: {
         Routes.register: (context) => const RegisterScreen(),

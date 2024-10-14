@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../app_colors.dart';
 import '../routes.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -37,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   style: TextStyle(
                     fontSize: 36.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.purple[800],
+                    color: AppColors.primary[800],
                   ),
                 ),
                 const SizedBox(height: 40.0),
@@ -47,8 +48,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                     labelText: 'Email',
                     filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon: const Icon(Icons.email, color: Colors.purple),
+                    fillColor: AppColors.background,
+                    prefixIcon:
+                        const Icon(Icons.email, color: AppColors.primary),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide: BorderSide.none,
@@ -63,8 +65,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                     labelText: 'Password',
                     filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon: const Icon(Icons.lock, color: Colors.purple),
+                    fillColor: AppColors.background,
+                    prefixIcon:
+                        const Icon(Icons.lock, color: AppColors.primary),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide: BorderSide.none,
@@ -78,8 +81,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                     labelText: 'Confirm Password',
                     filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon: const Icon(Icons.lock, color: Colors.purple),
+                    fillColor: AppColors.background,
+                    prefixIcon:
+                        const Icon(Icons.lock, color: AppColors.primary),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide: BorderSide.none,
@@ -93,7 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         vertical: 15.0, horizontal: 80.0),
-                    //primary: Colors.purple,
+                    //primary: AppColors.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
@@ -108,7 +112,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 if (_errorMessage.isNotEmpty)
                   Text(
                     _errorMessage,
-                    style: const TextStyle(color: Colors.red, fontSize: 14.0),
+                    style:
+                        const TextStyle(color: AppColors.error, fontSize: 14.0),
                   ),
               ],
             ),

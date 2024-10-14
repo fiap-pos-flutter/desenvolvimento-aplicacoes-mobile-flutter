@@ -58,7 +58,7 @@ class __CustomImagesState extends State<_CustomImages> {
                     ),
                     TextButton(
                       child: const Text('Delete',
-                          style: TextStyle(color: Colors.red)),
+                          style: TextStyle(color: AppColors.error)),
                       onPressed: () {
                         _removeImage(index);
                         Navigator.of(context).pop();
@@ -92,7 +92,7 @@ class __CustomImagesState extends State<_CustomImages> {
                     },
                     errorBuilder: (context, error, stackTrace) {
                       return const Center(
-                        child: Icon(Icons.error, color: Colors.red),
+                        child: Icon(Icons.error, color: AppColors.error),
                       );
                     },
                   ),
@@ -111,7 +111,8 @@ class __CustomImagesState extends State<_CustomImages> {
                     ),
                     child: const Text(
                       'Tap to View',
-                      style: TextStyle(color: Colors.white, fontSize: 12.0),
+                      style: TextStyle(
+                          color: AppColors.background, fontSize: 12.0),
                     ),
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../app_colors.dart';
 import '../routes.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                     fontSize: 36.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.purple[800],
+                    color: AppColors.primary[800],
                   ),
                 ),
                 const SizedBox(height: 40.0),
@@ -42,8 +43,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                     labelText: 'Email',
                     filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon: const Icon(Icons.email, color: Colors.purple),
+                    fillColor: AppColors.background,
+                    prefixIcon:
+                        const Icon(Icons.email, color: AppColors.primary),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide: BorderSide.none,
@@ -58,8 +60,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                     labelText: 'Password',
                     filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon: const Icon(Icons.lock, color: Colors.purple),
+                    fillColor: AppColors.background,
+                    prefixIcon:
+                        const Icon(Icons.lock, color: AppColors.primary),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide: BorderSide.none,
@@ -73,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         vertical: 15.0, horizontal: 80.0),
-                    //primary: Colors.purple,
+                    //primary: AppColors.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
@@ -88,7 +91,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (_errorMessage.isNotEmpty)
                   Text(
                     _errorMessage,
-                    style: const TextStyle(color: Colors.red, fontSize: 14.0),
+                    style:
+                        const TextStyle(color: AppColors.error, fontSize: 14.0),
                   ),
                 const SizedBox(height: 20.0),
                 // Create Account Button
@@ -98,7 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: Text(
                     'Create an account',
-                    style: TextStyle(fontSize: 16.0, color: Colors.purple[800]),
+                    style: TextStyle(
+                        fontSize: 16.0, color: AppColors.primary[800]),
                   ),
                 ),
               ],

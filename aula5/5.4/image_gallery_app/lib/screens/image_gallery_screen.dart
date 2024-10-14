@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
+import '../app_colors.dart';
 import '../routes.dart';
 
 part '../widgets/custom_images.dart';
@@ -110,17 +111,17 @@ class _ImageGalleryScreenState extends State<ImageGalleryScreen> {
       backgroundColor: const Color(0xFFF7F3FC), // Light purple background
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: Colors.white, //change your color here
+          color: AppColors.background, //change your color here
         ),
         title: const Text(
           'Image Gallery',
           style: TextStyle(
             fontSize: 22.0,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppColors.background,
           ),
         ),
-        backgroundColor: Colors.purple,
+        backgroundColor: AppColors.primary,
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -131,7 +132,7 @@ class _ImageGalleryScreenState extends State<ImageGalleryScreen> {
       body: _loading
           ? const Center(
               child: CircularProgressIndicator(
-                color: Colors.purple,
+                color: AppColors.primary,
               ),
             )
           : SingleChildScrollView(
@@ -145,7 +146,7 @@ class _ImageGalleryScreenState extends State<ImageGalleryScreen> {
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.purple[700],
+                      color: AppColors.primary[700],
                     ),
                   ),
                   const SizedBox(height: 10.0),
@@ -153,11 +154,11 @@ class _ImageGalleryScreenState extends State<ImageGalleryScreen> {
                     padding: const EdgeInsets.all(16.0),
                     margin: const EdgeInsets.symmetric(horizontal: 16.0),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.background,
                       borderRadius: BorderRadius.circular(12.0),
                       boxShadow: const [
                         BoxShadow(
-                          color: Colors.black12,
+                          color: AppColors.shadow,
                           blurRadius: 8.0,
                         ),
                       ],
